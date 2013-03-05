@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		TextView card = (TextView) findViewById(R.id.display_card);
+		TextView card = (TextView) findViewById(R.id.card_text);
 		card.setText("one");
 	}
 
@@ -37,9 +37,9 @@ public class MainActivity extends Activity {
 	}
 
 	public void checkTranslation(View view) {
-		TextView cardText = (TextView) findViewById(R.id.display_card);
+		TextView cardText = (TextView) findViewById(R.id.card_text);
 		String card = cardText.getText().toString();
-		EditText translationText = (EditText) findViewById(R.id.translate_card);
+		EditText translationText = (EditText) findViewById(R.id.card_translation);
 		String translation = translationText.getText().toString();
 		
 		String message = translate(card, translation) ? "correct!" : "wrong :(";
