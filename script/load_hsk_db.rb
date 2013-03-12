@@ -10,7 +10,7 @@ def insert_translation(db, order, level, word, pinyin, definition)
 end
 
 def insert_hsk_entry(db, id, order, level)
-  db.execute("INSERT INTO hsk_lists VALUES(?, ?, ?)", id, level, order)
+  db.execute("INSERT INTO hsk_lists VALUES(NULL, ?, ?, ?)", id, level, order)
 end  
 
 files = 1.upto(6).collect{|i| "hsk_files/HSK_Level_#{i}_(New_HSK).csv"}
@@ -19,14 +19,19 @@ db.execute("PRAGMA synchronous=OFF")
 db.execute("PRAGMA encoding=\"UTF-8\"")
 
 create_tables = <<-STR
+CREATE TABLE android_metadata (
+  locale text
+);
+INSERT INTO android_metadata VALUES('en_US');
 CREATE TABLE translations(
-  id integer primary key autoincrement,
+  _id integer primary key autoincrement,
   simplified text,
   pinyin text,
   definition text
 );
 CREATE INDEX simplified ON translations(simplified);
 CREATE TABLE hsk_lists (
+  _id integer primary key autoincrement,
   translation_id integer,
   level_number integer,
   order_number integer
@@ -70,7 +75,7 @@ files.each_with_index do |f, idx|
       definition = row[4]
     end
 
-    result = db.get_first_row("SELECT id FROM translations WHERE simplified = ?", word)
+    result = db.get_first_row("SELECT _id FROM translations WHERE simplified = ?", word)
     if result
       insert_hsk_entry(db, result.first, order, level)
     else
