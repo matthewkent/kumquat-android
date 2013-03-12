@@ -36,7 +36,7 @@ public class HskDbHelper extends SQLiteOpenHelper {
 	private void createDb() throws IOException {
 		InputStream input = null;
 		try {
-			input = context.getAssets().open(DB_NAME);
+			input = context.getResources().getAssets().open(DB_NAME);
 			FileUtils.copyInputStreamToFile(input, context.getDatabasePath(DB_NAME));
 		} finally {
 			if(input != null) {
