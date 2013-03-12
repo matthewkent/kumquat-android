@@ -12,7 +12,6 @@
         android:id="@+id/card_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
         android:textIsSelectable="false"
         android:textSize="50sp" />
