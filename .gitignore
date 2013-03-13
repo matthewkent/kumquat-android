@@ -18,3 +18,7 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# kumquat files
+hsk_files/
+.rvmrc
