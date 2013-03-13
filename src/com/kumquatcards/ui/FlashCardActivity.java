@@ -43,14 +43,14 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		return new CursorLoader(this, HskContract.Translations.CONTENT_URI, new String[] {HskContract.Translations.COLUMN_NAME_ID, HskContract.Translations.COLUMN_NAME_SIMPLIFIED}, null, null, null);
+		return new CursorLoader(this, HskContract.FlashCards.CONTENT_URI, new String[] {HskContract.FlashCards.COLUMN_NAME_ID, HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED}, null, null, null);
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		TextView card = (TextView) findViewById(R.id.card_text);
 		if (cursor.moveToFirst()) {
-			String text = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.Translations.COLUMN_NAME_SIMPLIFIED)));
+			String text = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED)));
 			card.setText(text);
 		} else {
 			Log.e(TAG, "oh noes");
