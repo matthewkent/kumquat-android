@@ -1,11 +1,11 @@
-package com.kumquatcards.test;
+package com.kumquatcards.provider.test;
 
 import android.database.Cursor;
 import android.test.ProviderTestCase2;
 import android.test.mock.MockContentResolver;
 
-import com.kumquatcards.HskContract;
-import com.kumquatcards.HskProvider;
+import com.kumquatcards.provider.HskContract;
+import com.kumquatcards.provider.HskProvider;
 
 public class HskProviderTest extends ProviderTestCase2<HskProvider> {
 

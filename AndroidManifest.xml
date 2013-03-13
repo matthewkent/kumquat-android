@@ -21,9 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.kumquatcards.ui.FlashCardActivity" >
+        </activity>
         <provider
-            android:name="com.kumquatcards.HskProvider"
-            android:authorities="com.kumquatcards.HskProvider"
+            android:name="com.kumquatcards.provider.HskProvider"
+            android:authorities="com.kumquatcards.provider.HskProvider"
             android:exported="false" >
             <grant-uri-permission android:pathPattern=".*" />
         </provider>

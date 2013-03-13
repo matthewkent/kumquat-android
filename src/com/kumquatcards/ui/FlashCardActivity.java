@@ -1,4 +1,4 @@
-package com.kumquatcards;
+package com.kumquatcards.ui;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -12,13 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
-	public static final String TAG = "MainActivity";
+import com.kumquatcards.R;
+import com.kumquatcards.provider.HskContract;
+
+public class FlashCardActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
+	public static final String TAG = "FlashCardActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_flash_card);
 		getLoaderManager().initLoader(0, null, this);
 	}
 

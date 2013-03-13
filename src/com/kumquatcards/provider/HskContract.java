@@ -1,9 +1,9 @@
-package com.kumquatcards;
+package com.kumquatcards.provider;
 
 import android.net.Uri;
 
 public final class HskContract {
-	public static final String AUTHORITY = "com.kumquatcards.HskProvider";
+	public static final String AUTHORITY = "com.kumquatcards.provider.HskProvider";
 
 	private HskContract(){}
 

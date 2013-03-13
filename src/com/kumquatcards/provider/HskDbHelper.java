@@ -1,4 +1,4 @@
-package com.kumquatcards;
+package com.kumquatcards.provider;
 
 import java.io.IOException;
 import java.io.InputStream;
