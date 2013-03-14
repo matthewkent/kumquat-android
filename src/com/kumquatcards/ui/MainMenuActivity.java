@@ -2,11 +2,13 @@ package com.kumquatcards.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.kumquatcards.R;
+import com.kumquatcards.provider.HskContract;
 
 public class MainMenuActivity extends Activity {
 
@@ -44,5 +46,10 @@ public class MainMenuActivity extends Activity {
 		}
 
 		Log.i(TAG, "starting quiz level: " + level);
+
+		Uri uri = HskContract.FlashCards.buildFlashCardUri(level, 1);
+
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri, this, FlashCardActivity.class);
+		startActivity(intent);
 	}
 }
