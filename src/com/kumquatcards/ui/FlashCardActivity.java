@@ -3,6 +3,7 @@ package com.kumquatcards.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,10 +83,17 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 	public void checkTranslation(View view) {
 		EditText translationText = (EditText) findViewById(R.id.card_translation);
 		String input = translationText.getText().toString();
-		
-		String message = input.equalsIgnoreCase(currentTranslation) ? "correct!" : "wrong :(";
-		Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
-		toast.show();
+
+		boolean correct = input.equalsIgnoreCase(currentTranslation);
+		String message = correct ? "RIGHT!" : "WRONG!";
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+		if(correct) {
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(translationText.getWindowToken(), 0);
+			translationText.setText("");
+			moveNext(view);
+		}
 	}
 
 	public void movePrev(View view) {
