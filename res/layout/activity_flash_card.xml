@@ -7,17 +7,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/card_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textIsSelectable="false"
-        android:textSize="50sp" />
     <RelativeLayout
-        android:layout_below="@id/card_text"
+        android:id="@+id/nav_buttons"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
         <Button
             android:id="@+id/button_prev"
             android:text="prev"
@@ -33,6 +27,15 @@
             android:layout_toRightOf="@id/button_prev"
             android:onClick="moveNext" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/card_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nav_buttons"
+        android:gravity="center_horizontal"
+        android:textIsSelectable="false"
+        android:textSize="50sp" />
     <RelativeLayout
         android:id="@+id/layout_card_input"
         android:layout_width="wrap_content"
