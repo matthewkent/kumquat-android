@@ -30,6 +30,14 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 	private int currentOrder;
 	private boolean showingBack = false;
 
+	private static final int CARD_STATE_NONE = 0;
+	private static final int CARD_STATE_CORRECT = 1;
+	private static final int CARD_STATE_INCORRECT = 2;
+
+	private int[] cardStates;
+	private int totalCount;
+	private int correctCount = 0;
+
 	public static class CardFrontFragment extends Fragment {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,8 +80,12 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
 		currentOrder = Integer.parseInt(getIntent().getData().getPathSegments().get(2));
 
+		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
+		cardStates = new int[totalCount];
+
 		setContentView(R.layout.activity_flash_card);
 		getLoaderManager().initLoader(0, null, this);
+		updateNav();
 
 		if(savedInstanceState == null) {
 			getFragmentManager().beginTransaction().add(R.id.card_container, frontFragment).commit();
@@ -89,11 +101,25 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
 		if(correct) {
+			cardStates[currentOrder - 1] = CARD_STATE_CORRECT;
+			correctCount += 1;
+
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(translationText.getWindowToken(), 0);
 			translationText.setText("");
 			moveNext(view);
+		} else {
+			cardStates[currentOrder - 1] = CARD_STATE_INCORRECT;
 		}
+		updateNav();
+	}
+
+	private void updateNav() {
+		TextView numCorrectView = (TextView) findViewById(R.id.card_nav_num_correct);
+		numCorrectView.setText(String.format("num correct: %s/%s", correctCount, totalCount));
+
+		TextView currentNumView = (TextView) findViewById(R.id.card_nav_current_num);
+		currentNumView.setText(String.format("current index: %s/%s", currentOrder, totalCount));
 	}
 
 	public void movePrev(View view) {
@@ -101,6 +127,7 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 			currentOrder -= 1;
 		}
 		getLoaderManager().restartLoader(0, null, this);
+		updateNav();
 	}
 
 	public void moveNext(View view) {
@@ -108,6 +135,7 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 			currentOrder += 1;
 		}
 		getLoaderManager().restartLoader(0, null, this);
+		updateNav();
 	}
 
 	public void flipCard(View view) {

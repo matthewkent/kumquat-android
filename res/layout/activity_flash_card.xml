@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -6,56 +7,70 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <RelativeLayout
-        android:id="@+id/nav_buttons"
-        android:layout_alignParentTop="true"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        <Button
-            android:id="@+id/button_prev"
-            android:text="prev"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:onClick="movePrev" />
-        <Button
-            android:id="@+id/button_next"
-            android:text="next"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@id/button_prev"
-            android:onClick="moveNext" />
-        <Button
-            android:id="@+id/button_flip"
-            android:text="flip"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@id/button_next"
-            android:onClick="flipCard" />
-    </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+	        <Button
+	            android:id="@+id/button_prev"
+	            android:text="prev"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:onClick="movePrev" />
+	        <Button
+	            android:id="@+id/button_next"
+	            android:text="next"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:onClick="moveNext" />
+	        <Button
+	            android:id="@+id/button_flip"
+	            android:text="flip"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:onClick="flipCard" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+	        <TextView
+	            android:id="@+id/card_nav_num_correct"
+	            android:textIsSelectable="false"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content" />
+	        <TextView
+	            android:id="@+id/card_nav_current_num"
+	            android:textIsSelectable="false"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/card_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/nav_buttons" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <RelativeLayout
-        android:id="@+id/layout_card_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <EditText android:id="@+id/card_translation"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:inputType="text" />
         <Button
             android:id="@+id/translate_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:text="@string/button_send"
             android:onClick="checkTranslation" />
-        <EditText android:id="@+id/card_translation"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_toLeftOf="@id/translate_button"
-	        android:inputType="text" />
-    </RelativeLayout>
-</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
