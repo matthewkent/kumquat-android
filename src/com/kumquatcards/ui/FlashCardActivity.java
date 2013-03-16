@@ -141,10 +141,14 @@ public class FlashCardActivity extends Activity implements LoaderManager.LoaderC
 	public void flipCard(View view) {
 		if(showingBack) {
 			showingBack = false;
-			getFragmentManager().beginTransaction().replace(R.id.card_container, frontFragment).commit();
+			getFragmentManager().beginTransaction().
+				setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out).
+				replace(R.id.card_container, frontFragment).commit();
 		} else {
 			showingBack = true;
-			getFragmentManager().beginTransaction().replace(R.id.card_container, backFragment).commit();
+			getFragmentManager().beginTransaction().
+				setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out).
+				replace(R.id.card_container, backFragment).commit();
 		}
 	}
 
