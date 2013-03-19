@@ -1,9 +1,6 @@
 package com.kumquatcards.ui;
 
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -106,7 +106,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			}
 		});
 
-		getLoaderManager().initLoader(0, null, this);
+		getSupportLoaderManager().initLoader(0, null, this);
 	}
 
 	@Override
