@@ -12,7 +12,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -27,11 +26,6 @@ import com.kumquatcards.provider.HskContract;
 public class FlashCardActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 	public static final String TAG = "FlashCardActivity";
 
-//	private static final int CARD_STATE_NONE = 0;
-//	private static final int CARD_STATE_CORRECT = 1;
-//	private static final int CARD_STATE_INCORRECT = 2;
-//
-//	private int[] cardStates;
 	private int totalCount;
 	private int correctCount = 0;
 	private int currentLevel;
@@ -93,7 +87,6 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
 		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
-//		cardStates = new int[totalCount];
 
 		pagerAdapter = new FlashCardPagerAdapter(getSupportFragmentManager(), null);
 		ViewPager pager = (ViewPager) findViewById(R.id.flash_card_pager);
@@ -141,14 +134,11 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
 		if(correct) {
-//			cardStates[currentOrder - 1] = CARD_STATE_CORRECT;
 			correctCount += 1;
 
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(translationText.getWindowToken(), 0);
 			translationText.setText("");
-		} else {
-//			cardStates[currentOrder - 1] = CARD_STATE_INCORRECT;
 		}
 		updateScores();
 	}
