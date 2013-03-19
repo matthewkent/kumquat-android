@@ -19,11 +19,11 @@ public class HskProvider extends ContentProvider {
 
 	private static UriMatcher uriMatcher;
 
-	private static final int URI_FLASH_CARD = 1;
+	private static final int URI_FLASH_CARDS = 1;
 
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI(HskContract.AUTHORITY, "flashcards/#/#", URI_FLASH_CARD);
+		uriMatcher.addURI(HskContract.AUTHORITY, "flashcards/#", URI_FLASH_CARDS);
 	}
 
 	@Override
@@ -48,17 +48,13 @@ public class HskProvider extends ContentProvider {
 			String[] selectionArgs, String sortOrder) {
 		try {
 			switch(uriMatcher.match(uri)) {
-			case URI_FLASH_CARD:
+			case URI_FLASH_CARDS:
 				SQLiteDatabase db = dbHelper.getDatabase();
-				int levelNumber = Integer.parseInt(uri.getPathSegments().get(1));
-				int orderNumber = Integer.parseInt(uri.getPathSegments().get(2));
-				int cardId = getFlashCardId(db, levelNumber, orderNumber);
+				int level = Integer.parseInt(uri.getPathSegments().get(1));
+				String tables = "hsk_lists INNER JOIN translations ON hsk_lists.translation_id = translations._id";
+				String selection2 = "hsk_lists.level_number = " + level;
 				Cursor c = null;
-				if (cardId > 0) {
-					c = db.query(HskContract.FlashCards.TABLE_NAME, projection, HskContract.FlashCards.COLUMN_NAME_ID + " = " + cardId, null, null, null, null);
-				} else {
-					c = new MatrixCursor(new String[] {}, 0);
-				}
+				c = db.query(tables, projection, selection2, null, null, null, null);
 				c.setNotificationUri(getContext().getContentResolver(), uri);
 				return c;
 			default:

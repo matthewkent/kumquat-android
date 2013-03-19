@@ -42,8 +42,8 @@ public final class HskContract {
 		public static final String COLUMN_NAME_PINYIN = "pinyin";
 		public static final String COLUMN_NAME_DEFINITION = "definition";
 
-		public static Uri buildFlashCardUri(int hskLevel, int orderNumber) {
-			return CONTENT_URI.buildUpon().appendPath(String.valueOf(hskLevel)).appendPath(String.valueOf(orderNumber)).build();
+		public static Uri buildFlashCardsUri(int hskLevel) {
+			return CONTENT_URI.buildUpon().appendPath(String.valueOf(hskLevel)).build();
 		}
 	}
 

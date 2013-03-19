@@ -26,35 +26,35 @@ public class HskProviderTest extends ProviderTestCase2<HskProvider> {
 	public void testQueryFlashCard() {
 		Cursor c;
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(1, 1), null, null, null, null);
-		assertEquals(1, c.getCount());
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(1), null, null, null, null);
+		assertEquals(HskContract.FlashCards.LEVEL_1_MAX, c.getCount());
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(2, 3), null, null, null, null);
-		assertEquals(1, c.getCount());
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(2), null, null, null, null);
+		assertEquals(HskContract.FlashCards.LEVEL_2_MAX, c.getCount());
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(3, 250), null, null, null, null);
-		assertEquals(1, c.getCount());
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(3), null, null, null, null);
+		assertEquals(HskContract.FlashCards.LEVEL_3_MAX, c.getCount());
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(4, 999), null, null, null, null);
-		assertEquals(1, c.getCount());
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(4), null, null, null, null);
+		assertEquals(HskContract.FlashCards.LEVEL_4_MAX, c.getCount());
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(5, 1234), null, null, null, null);
-		assertEquals(1, c.getCount());
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(5), null, null, null, null);
+		assertEquals(HskContract.FlashCards.LEVEL_5_MAX, c.getCount());
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(6, 4567), null, null, null, null);
-		assertEquals(1, c.getCount());
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(6), null, null, null, null);
+		assertEquals(HskContract.FlashCards.LEVEL_6_MAX, c.getCount());
 	}
 
 	public void testQueryInvalidFlashCardId() {
 		Cursor c;
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(1, 1234), null, null, null, null);
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(0), null, null, null, null);
 		assertEquals(0, c.getCount());
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(7, 1), null, null, null, null);
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(7), null, null, null, null);
 		assertEquals(0, c.getCount());
 
-		c = mockResolver.query(HskContract.FlashCards.buildFlashCardUri(123, 456), null, null, null, null);
+		c = mockResolver.query(HskContract.FlashCards.buildFlashCardsUri(123), null, null, null, null);
 		assertEquals(0, c.getCount());
 	}
 

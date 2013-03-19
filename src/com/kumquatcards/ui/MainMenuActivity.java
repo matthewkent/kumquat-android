@@ -47,7 +47,7 @@ public class MainMenuActivity extends Activity {
 
 		Log.i(TAG, "starting quiz level: " + level);
 
-		Uri uri = HskContract.FlashCards.buildFlashCardUri(level, 1);
+		Uri uri = HskContract.FlashCards.buildFlashCardsUri(level);
 
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri, this, FlashCardActivity.class);
 		startActivity(intent);
