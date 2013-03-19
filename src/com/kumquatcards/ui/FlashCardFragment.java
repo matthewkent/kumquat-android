@@ -91,7 +91,7 @@ public class FlashCardFragment extends Fragment {
         // The animation listener is used to trigger the next animation
         final Rotate3dAnimation rotation =
                 new Rotate3dAnimation(start, end, centerX, centerY, 310.0f, true);
-        rotation.setDuration(500);
+        rotation.setDuration(200);
         rotation.setFillAfter(true);
         rotation.setInterpolator(new AccelerateInterpolator());
         rotation.setAnimationListener(new DisplayNextView(flipToBack));
@@ -152,7 +152,7 @@ public class FlashCardFragment extends Fragment {
                 rotation = new Rotate3dAnimation(90, 0, centerX, centerY, 310.0f, false);
             }
 
-            rotation.setDuration(500);
+            rotation.setDuration(200);
             rotation.setFillAfter(true);
             rotation.setInterpolator(new DecelerateInterpolator());
 
