@@ -15,8 +15,25 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/card_container"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
+	    <TextView
+	        android:id="@+id/card_front_text"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:gravity="center_horizontal"
+	        android:textIsSelectable="false"
+	        android:textSize="50sp" />
+	    <TextView
+	        android:id="@+id/card_back_text"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:gravity="center_horizontal"
+	        android:textIsSelectable="false"
+	        android:textSize="50sp"
+	        android:visibility="gone" />
+	    </LinearLayout>
 
 </LinearLayout>
