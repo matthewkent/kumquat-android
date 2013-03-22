@@ -3,7 +3,6 @@
 
     <string name="app_name">Kumquat</string>
     <string name="action_settings">Settings</string>
-    <string name="button_send">Send</string>
     <string name="button_level1">HSK Level 1</string>
     <string name="button_level2">HSK Level 2</string>
     <string name="button_level3">HSK Level 3</string>

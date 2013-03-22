@@ -33,15 +33,12 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        <EditText android:id="@+id/card_translation"
+        <EditText
+            android:id="@+id/card_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:imeOptions="actionSend"
             android:inputType="text" />
-        <Button
-            android:id="@+id/button_translate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_send" />
     </LinearLayout>
 </LinearLayout>

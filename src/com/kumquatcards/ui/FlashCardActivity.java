@@ -12,12 +12,13 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.kumquatcards.R;
@@ -78,11 +79,16 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 		setContentView(R.layout.activity_flash_card);
 
-		Button checkButton = (Button) findViewById(R.id.button_translate);
-		checkButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				checkTranslation(v);
-			};
+		EditText editText = (EditText) findViewById(R.id.card_input);
+		editText.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if(actionId == EditorInfo.IME_ACTION_SEND) {
+					checkTranslation(v);
+					return true;
+				}
+				return false;
+			}
 		});
 
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
@@ -121,8 +127,8 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	}
 
 	public void checkTranslation(View view) {
-		EditText translationText = (EditText) findViewById(R.id.card_translation);
-		String input = translationText.getText().toString();
+		EditText inputText = (EditText) findViewById(R.id.card_input);
+		String input = inputText.getText().toString();
 
 		ViewPager pager = (ViewPager) findViewById(R.id.flash_card_pager);
 		int index = pager.getCurrentItem();
@@ -137,8 +143,8 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			correctCount += 1;
 
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(translationText.getWindowToken(), 0);
-			translationText.setText("");
+			imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
+			inputText.setText("");
 			fragment.flipCard(null);
 		}
 		updateScores();
