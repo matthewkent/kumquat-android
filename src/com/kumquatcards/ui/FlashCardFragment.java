@@ -66,7 +66,7 @@ public class FlashCardFragment extends Fragment {
 			applyRotation(true, 0, 90);
 		} else {
 			showingFront = true;
-			applyRotation(false, 180, 90);
+			applyRotation(false, 0, -90);
 		}
 	}
 
@@ -143,7 +143,7 @@ public class FlashCardFragment extends Fragment {
                 cardBack.setVisibility(View.VISIBLE);
                 cardBack.requestFocus();
 
-                rotation = new Rotate3dAnimation(90, 180, centerX, centerY, 310.0f, false);
+                rotation = new Rotate3dAnimation(-90, 0, centerX, centerY, 310.0f, false);
             } else {
                 cardBack.setVisibility(View.GONE);
                 cardFront.setVisibility(View.VISIBLE);
