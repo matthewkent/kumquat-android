@@ -126,7 +126,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 		ViewPager pager = (ViewPager) findViewById(R.id.flash_card_pager);
 		int index = pager.getCurrentItem();
-		FlashCardFragment fragment = (FlashCardFragment) pagerAdapter.getItem(index);
+		FlashCardFragment fragment = (FlashCardFragment) pagerAdapter.instantiateItem(pager, index);
 		String translation = fragment.getArguments().getString(FlashCardFragment.ARG_TRANSLATION);
 
 		boolean correct = input.equalsIgnoreCase(translation);
@@ -139,6 +139,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(translationText.getWindowToken(), 0);
 			translationText.setText("");
+			fragment.flipCard(null);
 		}
 		updateScores();
 	}
