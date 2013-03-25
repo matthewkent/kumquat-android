@@ -6,6 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.kumquatcards.R;
 import com.kumquatcards.provider.HskContract;
@@ -18,33 +22,19 @@ public class MainMenuActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
+		String[] levels = new String[] {"HSK 1", "HSK 2", "HSK 3", "HSK 4", "HSK 5", "HSK 6"};
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, levels);
+		ListView list = (ListView) findViewById(R.id.main_menu_list);
+		list.setAdapter(adapter);
+		list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startQuiz(position + 1);
+			}
+		});
 	}
 
-	public void startQuiz(View view) {
-		int level = 0;
-		switch(view.getId()) {
-		case R.id.button_level1:
-			level = 1;
-			break;
-		case R.id.button_level2:
-			level = 2;
-			break;
-		case R.id.button_level3:
-			level = 3;
-			break;
-		case R.id.button_level4:
-			level = 4;
-			break;
-		case R.id.button_level5:
-			level = 5;
-			break;
-		case R.id.button_level6:
-			level = 6;
-			break;
-		default:
-			break;
-		}
-
+	public void startQuiz(int level) {
 		Log.i(TAG, "starting quiz level: " + level);
 
 		Uri uri = HskContract.FlashCards.buildFlashCardsUri(level);

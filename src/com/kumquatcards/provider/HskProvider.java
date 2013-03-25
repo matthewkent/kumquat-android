@@ -6,7 +6,6 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
@@ -30,17 +29,6 @@ public class HskProvider extends ContentProvider {
 	public boolean onCreate() {
 		dbHelper = new HskDbHelper(getContext());
 		return true;
-	}
-
-	private int getFlashCardId(SQLiteDatabase db, int levelNumber, int orderNumber) {
-		String selection = HskContract.HskLists.COLUMN_NAME_LEVEL_NUMBER + " = " + levelNumber + " AND " + HskContract.HskLists.COLUMN_NAME_ORDER_NUMBER + " = " + orderNumber;
-		Cursor c = db.query(HskContract.HskLists.TABLE_NAME, new String[] {HskContract.HskLists.COLUMN_NAME_TRANSLATION_ID}, selection, null, null, null, null);
-		int cardId = 0;
-		if(c.moveToNext()) {
-			cardId = c.getInt(0);
-		}
-		c.close();
-		return cardId;
 	}
 
 	@Override
