@@ -1,7 +1,9 @@
 package com.kumquatcards.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,8 +11,13 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.kumquatcards.R;
 
@@ -21,8 +28,8 @@ public class FlashCardFragment extends Fragment {
 	public static final String ARG_TRANSLATION = "translation";
 
 	private View cardContainer;
-	private TextView cardFront;
-	private TextView cardBack;
+	private View cardFront;
+	private View cardBack;
 
 	private String definition;
 	private String translation;
@@ -45,10 +52,12 @@ public class FlashCardFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_flash_card, container, false);
 		cardContainer = view.findViewById(R.id.card_container);
-		cardFront = (TextView) view.findViewById(R.id.card_front_text);
-		cardFront.setText(definition);
-		cardBack = (TextView) view.findViewById(R.id.card_back_text);
-		cardBack.setText(translation);
+		cardFront = view.findViewById(R.id.card_front);
+		TextView cardFrontText = (TextView) view.findViewById(R.id.card_front_text);
+		cardFrontText.setText(definition);
+		cardBack = view.findViewById(R.id.card_back);
+		TextView cardBackText = (TextView) view.findViewById(R.id.card_back_text);
+		cardBackText.setText(translation);
 
 		Button flipButton = (Button) view.findViewById(R.id.button_flip);
 		flipButton.setOnClickListener(new OnClickListener() {
@@ -57,6 +66,19 @@ public class FlashCardFragment extends Fragment {
 				flipCard(v);
 			}
 		});
+
+		EditText editText = (EditText) view.findViewById(R.id.card_input);
+		editText.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if(actionId == EditorInfo.IME_ACTION_SEND) {
+					checkTranslation(v);
+					return true;
+				}
+				return false;
+			}
+		});
+
 		return view;
 	}
 
@@ -68,6 +90,26 @@ public class FlashCardFragment extends Fragment {
 			showingFront = true;
 			applyRotation(false, 0, -90);
 		}
+	}
+
+	public void checkTranslation(View view) {
+		EditText inputText = (EditText) cardFront.findViewById(R.id.card_input);
+		String input = inputText.getText().toString();
+		String translation = getArguments().getString(FlashCardFragment.ARG_TRANSLATION);
+
+		boolean correct = input.equalsIgnoreCase(translation);
+		String message = correct ? "RIGHT!" : "WRONG!";
+		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+
+		if(correct) {
+//			correctCount += 1;
+
+			InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
+			inputText.setText("");
+			flipCard(null);
+		}
+//		updateScores();
 	}
 
 	/*
