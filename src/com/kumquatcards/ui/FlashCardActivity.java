@@ -30,11 +30,12 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 	private int totalCount;
 	private int currentLevel;
-	private int currentIndex = 1;
+	private int currentIndex = 0;
 
 	private Set<Integer> cardScores = null;
 
 	private FlashCardPagerAdapter pagerAdapter;
+	private ViewPager pager;
 	private Menu menu;
 
 	public class FlashCardPagerAdapter extends FragmentStatePagerAdapter {
@@ -47,6 +48,9 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 		@Override
 		public android.support.v4.app.Fragment getItem(int i) {
+			if(getCount() == 0) {
+				return null;
+			}
 			Fragment fragment = new FlashCardFragment();
 			Bundle args = new Bundle();
 			cursor.moveToPosition(i);
@@ -89,7 +93,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
 
 		pagerAdapter = new FlashCardPagerAdapter(getSupportFragmentManager(), null);
-		ViewPager pager = (ViewPager) findViewById(R.id.flash_card_pager);
+		pager = (ViewPager) findViewById(R.id.flash_card_pager);
 		pager.setAdapter(pagerAdapter);
 		pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
@@ -113,7 +117,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		this.menu = menu;
-		updateNav();
+		postOnLoadFinished();
 		return true;
 	}
 
@@ -132,6 +136,8 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		}
 	}
 
+	private Cursor cardCursor;
+
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		switch(loader.getId()) {
@@ -139,17 +145,28 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			if(cursor.getCount() != totalCount) {
 				throw new IllegalArgumentException("oh noes");
 			}
-			pagerAdapter.swapCursor(cursor);
+			cardCursor = cursor;
 			break;
 		case LOADER_SCORES:
 			if(cursor.moveToFirst()) {
 				String scoreData = cursor.getString(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_SCORE_DATA));
 				cardScores = deserializeScoreData(scoreData);
+				currentIndex = cursor.getInt(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_CURRENT_CARD));
 			} else {
 				cardScores = new HashSet<Integer>();
+				currentIndex = 1;
 			}
-			updateNav();
 			break;
+		}
+		postOnLoadFinished();
+	}
+
+	private synchronized void postOnLoadFinished() {
+		if(cardCursor != null && cardScores != null && menu != null) {
+			pagerAdapter.swapCursor(cardCursor);
+			pager.setCurrentItem(currentIndex - 1, false);
+			updateNav();
+			cardCursor = null;
 		}
 	}
 
@@ -195,16 +212,20 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 	private Set<Integer> deserializeScoreData(String data) {
 		Set<Integer> set = new HashSet<Integer>();
-		for(String s: data.split(",")) {
-			set.add(Integer.valueOf(s));
+		if(data.length() > 0) {
+			for(String s: data.split(",")) {
+				set.add(Integer.valueOf(s));
+			}
 		}
 		return set;
 	}
 
 	private String serializeScoreData(Set<Integer> data) {
 		StringBuffer sb = new StringBuffer();
-		for(Integer i: data) {
-			sb.append(i).append(",");
+		if(data.size() > 0) {
+			for(Integer i: data) {
+				sb.append(i).append(",");
+			}
 		}
 		return sb.toString();
 	}
