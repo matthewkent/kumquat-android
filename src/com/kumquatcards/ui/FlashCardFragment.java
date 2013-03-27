@@ -26,6 +26,7 @@ public class FlashCardFragment extends Fragment {
 
 	public static final String ARG_DEFINITION = "definition";
 	public static final String ARG_TRANSLATION = "translation";
+	public static final String ARG_INDEX = "index";
 
 	private View cardContainer;
 	private View cardFront;
@@ -33,6 +34,7 @@ public class FlashCardFragment extends Fragment {
 
 	private String definition;
 	private String translation;
+	private int index;
 
 	private boolean showingFront = true;
 
@@ -45,6 +47,7 @@ public class FlashCardFragment extends Fragment {
 
 		definition = getArguments().getString(ARG_DEFINITION);
 		translation = getArguments().getString(ARG_TRANSLATION);
+		index = getArguments().getInt(ARG_INDEX);
 	}
 
 	@Override
@@ -102,14 +105,13 @@ public class FlashCardFragment extends Fragment {
 		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
 		if(correct) {
-//			correctCount += 1;
+			((FlashCardActivity) getActivity()).markCardCorrect(index);
 
 			InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
 			inputText.setText("");
 			flipCard(null);
 		}
-//		updateScores();
 	}
 
 	/*
