@@ -21,13 +21,13 @@ public class HskProvider extends ContentProvider {
 
 	private static final int URI_FLASH_CARDS = 1;
 	private static final int URI_SCORES = 2;
-	private static final int URI_CURRENT_CARD = 3;
+	private static final int URI_ALL_SCORES= 3;
 
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		uriMatcher.addURI(HskContract.AUTHORITY, "flashcards/#", URI_FLASH_CARDS);
 		uriMatcher.addURI(HskContract.AUTHORITY, "scores/#", URI_SCORES);
-		uriMatcher.addURI(HskContract.AUTHORITY, "current_card/#", URI_CURRENT_CARD);
+		uriMatcher.addURI(HskContract.AUTHORITY, "scores", URI_ALL_SCORES);
 	}
 
 	@Override
@@ -59,9 +59,11 @@ public class HskProvider extends ContentProvider {
 				c = db.query(HskContract.Scores.TABLE_NAME, null, HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER + " = " + level, null, null, null, null);
 				c.setNotificationUri(getContext().getContentResolver(), uri);
 				return c;
-			case URI_CURRENT_CARD:
-				// lol wut
-				break;
+			case URI_ALL_SCORES:
+				db = scoreDbHelper.getReadableDatabase();
+				c = db.query(HskContract.Scores.TABLE_NAME, null, null, null, null, null, HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER + " ASC");
+				c.setNotificationUri(getContext().getContentResolver(), uri);
+				return c;
 			default:
 				throw new IllegalArgumentException("Unknown URI " + uri);
 			}

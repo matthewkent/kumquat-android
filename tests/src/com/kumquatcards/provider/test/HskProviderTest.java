@@ -105,4 +105,14 @@ public class HskProviderTest extends ProviderTestCase2<HskProvider> {
 			// success
 		}
 	}
+
+	public void testQueryAllScores() {
+		Cursor c;
+		c = mockResolver.query(HskContract.Scores.buildAllScoresUri(), null, null, null, null);
+		assertEquals(6, c.getCount());
+		c.moveToFirst();
+		assertEquals(1, c.getInt(c.getColumnIndex(HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER)));
+		assertEquals(0, c.getInt(c.getColumnIndex(HskContract.Scores.COLUMN_NAME_CURRENT_CARD)));
+		assertNull(c.getString(c.getColumnIndex(HskContract.Scores.COLUMN_NAME_SCORE_DATA)));
+	}
 }

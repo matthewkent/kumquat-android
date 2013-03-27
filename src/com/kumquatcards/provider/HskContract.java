@@ -60,6 +60,10 @@ public final class HskContract {
 		public static Uri buildScoresUri(int hskLevel) {
 			return CONTENT_URI.buildUpon().appendPath(String.valueOf(hskLevel)).build();
 		}
+
+		public static Uri buildAllScoresUri() {
+			return CONTENT_URI;
+		}
 	}
 
 	public static final class HskLists {

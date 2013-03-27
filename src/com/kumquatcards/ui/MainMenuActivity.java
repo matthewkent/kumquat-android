@@ -1,29 +1,54 @@
 package com.kumquatcards.ui;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.kumquatcards.R;
 import com.kumquatcards.provider.HskContract;
 
-public class MainMenuActivity extends Activity {
+public class MainMenuActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	public static final String TAG = "MainMenuActivity";
+
+	private class MainMenuCursorAdapter extends SimpleCursorAdapter {
+
+		public MainMenuCursorAdapter(Context context) {
+			super(context, R.layout.list_item_main_menu, null, new String[] {HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER, HskContract.Scores.COLUMN_NAME_CURRENT_CARD}, null, 0);
+		}
+
+		@Override
+		public void bindView(View view, Context context, Cursor cursor) {
+			int level = cursor.getInt(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER));
+			TextView itemLabel = (TextView) view.findViewById(R.id.list_item_title);
+			itemLabel.setText(String.format("HSK %s", level));
+			int index = cursor.getInt(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_CURRENT_CARD));
+			if(index > 0) {
+				TextView itemIndex = (TextView) view.findViewById(R.id.list_item_index);
+				itemIndex.setText(String.format("%s/%s", index, HskContract.FlashCards.maxOrderForLevel(level)));
+			}
+		}
+	}
+
+	private SimpleCursorAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
-		String[] levels = new String[] {"HSK 1", "HSK 2", "HSK 3", "HSK 4", "HSK 5", "HSK 6"};
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, levels);
+		adapter = new MainMenuCursorAdapter(this);
 		ListView list = (ListView) findViewById(R.id.main_menu_list);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(new OnItemClickListener() {
@@ -32,14 +57,29 @@ public class MainMenuActivity extends Activity {
 				startQuiz(position + 1);
 			}
 		});
+
+		getSupportLoaderManager().initLoader(0, null, this);
 	}
 
 	public void startQuiz(int level) {
-		Log.i(TAG, "starting quiz level: " + level);
-
 		Uri uri = HskContract.FlashCards.buildFlashCardsUri(level);
 
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri, this, FlashCardActivity.class);
 		startActivity(intent);
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		Uri uri = HskContract.Scores.buildAllScoresUri();
+		return new CursorLoader(this, uri, null, null, null, null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+		adapter.swapCursor(cursor);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
 	}
 }

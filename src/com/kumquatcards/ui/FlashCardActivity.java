@@ -154,6 +154,8 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 				currentIndex = cursor.getInt(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_CURRENT_CARD));
 			} else {
 				cardScores = new HashSet<Integer>();
+			}
+			if(currentIndex < 1) {
 				currentIndex = 1;
 			}
 			break;
@@ -212,7 +214,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 	private Set<Integer> deserializeScoreData(String data) {
 		Set<Integer> set = new HashSet<Integer>();
-		if(data.length() > 0) {
+		if(data != null && data.length() > 0) {
 			for(String s: data.split(",")) {
 				set.add(Integer.valueOf(s));
 			}
