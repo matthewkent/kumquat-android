@@ -110,7 +110,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
+		inflater.inflate(R.menu.flash_card, menu);
 		return true;
 	}
 
@@ -119,6 +119,20 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		this.menu = menu;
 		postOnLoadFinished();
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.action_start_over:
+			cardScores = new HashSet<Integer>();
+			currentIndex = 1;
+			pager.setCurrentItem(0, false);
+			updateNav();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override

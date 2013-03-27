@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">Kumquat</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_character_set">Character set</string>
+    <string name="action_credits">Credits</string>
+    <string name="action_start_over">Start over</string>
 
 </resources>

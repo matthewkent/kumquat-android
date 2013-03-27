@@ -101,6 +101,7 @@ public class HskProvider extends ContentProvider {
 				db.insert(HskContract.Scores.TABLE_NAME, null, values);
 			}
 			getContext().getContentResolver().notifyChange(uri, null);
+			getContext().getContentResolver().notifyChange(HskContract.Scores.buildAllScoresUri(), null);
 			return count;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
