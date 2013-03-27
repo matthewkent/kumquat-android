@@ -15,7 +15,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.kumquatcards.R;
 import com.kumquatcards.provider.HskContract;
@@ -28,11 +30,12 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 	private int totalCount;
 	private int currentLevel;
-	private int currentIndex;
+	private int currentIndex = 1;
 
 	private Set<Integer> cardScores = null;
 
 	private FlashCardPagerAdapter pagerAdapter;
+	private Menu menu;
 
 	public class FlashCardPagerAdapter extends FragmentStatePagerAdapter {
 		private Cursor cursor;
@@ -90,12 +93,26 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			@Override
 			public void onPageSelected(int position) {
 				currentIndex = position + 1;
-				updateNav();
+				updateIndex();
 			}
 		});
 
 		getSupportLoaderManager().initLoader(LOADER_FLASH_CARDS, null, this);
 		getSupportLoaderManager().initLoader(LOADER_SCORES, null, this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		this.menu = menu;
+		updateNav();
+		return true;
 	}
 
 	@Override
@@ -129,7 +146,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			} else {
 				cardScores = new HashSet<Integer>();
 			}
-			updateScores();
+			updateNav();
 			break;
 		}
 	}
@@ -161,13 +178,17 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	}
 
 	private void updateScores() {
-		TextView numCorrectView = (TextView) findViewById(R.id.card_nav_num_correct);
-		numCorrectView.setText(String.format("num correct: %s/%s", cardScores.size(), totalCount));
+		if(menu != null) {
+			MenuItem item = menu.getItem(1);
+			item.setTitle(String.format("correct: %s", cardScores.size()));
+		}
 	}
 
 	private void updateIndex() {
-		TextView currentNumView = (TextView) findViewById(R.id.card_nav_current_num);
-		currentNumView.setText(String.format("current card: %s/%s", currentIndex, totalCount));
+		if(menu != null) {
+			MenuItem item = menu.getItem(0);
+			item.setTitle(String.format("#%s / %s", currentIndex, totalCount));
+		}
 	}
 
 	private Set<Integer> deserializeScoreData(String data) {

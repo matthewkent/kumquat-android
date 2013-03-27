@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.kumquatcards.ui.MainMenuActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kumquatcards.ui.FlashCardActivity" >
+            android:name="com.kumquatcards.ui.FlashCardActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <provider
             android:name="com.kumquatcards.provider.HskProvider"
