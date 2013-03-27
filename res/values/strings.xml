@@ -2,8 +2,12 @@
 <resources>
 
     <string name="app_name">Kumquat</string>
-    <string name="action_character_set">Character set</string>
+    <string name="action_character_set">Switch character set</string>
     <string name="action_credits">Credits</string>
     <string name="action_start_over">Start over</string>
+    <string name="option_charset_simplified">Simplified</string>
+    <string name="option_charset_traditional">Traditional</string>
+    <string name="credits_title">Credits</string>
+    <string name="credits_content">write some stuff here</string>
 
 </resources>
