@@ -47,6 +47,21 @@ public final class HskContract {
 		}
 	}
 
+	public static final class Scores {
+		public static final String CONTENT_TYPE = "vnd.kumquatcards.hsk/vnd.kumquatcards.score";
+		public static final Uri CONTENT_URI =  Uri.parse("content://" + AUTHORITY + "/scores");
+
+		public static final String TABLE_NAME = "scores";
+		public static final String COLUMN_NAME_ID = "_id";
+		public static final String COLUMN_NAME_LEVEL_NUMBER = "level_number";
+		public static final String COLUMN_NAME_SCORE_DATA = "score_data";
+		public static final String COLUMN_NAME_CURRENT_CARD = "current_card";
+
+		public static Uri buildScoresUri(int hskLevel) {
+			return CONTENT_URI.buildUpon().appendPath(String.valueOf(hskLevel)).build();
+		}
+	}
+
 	public static final class HskLists {
 		public static final String CONTENT_TYPE = "vnd.kumquatcards.hsk/vnd.kumquatcards.hsk_list";
 		public static final Uri CONTENT_URI =  Uri.parse("content://" + AUTHORITY + "/hsk_lists");

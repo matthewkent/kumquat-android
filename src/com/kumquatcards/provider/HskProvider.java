@@ -14,20 +14,26 @@ public class HskProvider extends ContentProvider {
 
 	private static final String TAG = "HskProvider";
 
-	private HskDbHelper dbHelper;
+	private HskDbHelper hskDbHelper;
+	private ScoreDbHelper scoreDbHelper;
 
 	private static UriMatcher uriMatcher;
 
 	private static final int URI_FLASH_CARDS = 1;
+	private static final int URI_SCORES = 2;
+	private static final int URI_CURRENT_CARD = 3;
 
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		uriMatcher.addURI(HskContract.AUTHORITY, "flashcards/#", URI_FLASH_CARDS);
+		uriMatcher.addURI(HskContract.AUTHORITY, "scores/#", URI_SCORES);
+		uriMatcher.addURI(HskContract.AUTHORITY, "current_card/#", URI_CURRENT_CARD);
 	}
 
 	@Override
 	public boolean onCreate() {
-		dbHelper = new HskDbHelper(getContext());
+		hskDbHelper = new HskDbHelper(getContext());
+		scoreDbHelper = new ScoreDbHelper(getContext());
 		return true;
 	}
 
@@ -35,16 +41,27 @@ public class HskProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		try {
+			SQLiteDatabase db;
+			int level;
+			Cursor c;
 			switch(uriMatcher.match(uri)) {
 			case URI_FLASH_CARDS:
-				SQLiteDatabase db = dbHelper.getDatabase();
-				int level = Integer.parseInt(uri.getPathSegments().get(1));
+				db = hskDbHelper.getDatabase();
+				level = Integer.parseInt(uri.getPathSegments().get(1));
 				String tables = "hsk_lists INNER JOIN translations ON hsk_lists.translation_id = translations._id";
 				String selection2 = "hsk_lists.level_number = " + level;
-				Cursor c = null;
 				c = db.query(tables, projection, selection2, null, null, null, null);
 				c.setNotificationUri(getContext().getContentResolver(), uri);
 				return c;
+			case URI_SCORES:
+				db = scoreDbHelper.getReadableDatabase();
+				level = Integer.parseInt(uri.getPathSegments().get(1));
+				c = db.query(HskContract.Scores.TABLE_NAME, null, HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER + " = " + level, null, null, null, null);
+				c.setNotificationUri(getContext().getContentResolver(), uri);
+				return c;
+			case URI_CURRENT_CARD:
+				// lol wut
+				break;
 			default:
 				throw new IllegalArgumentException("Unknown URI " + uri);
 			}
@@ -72,7 +89,20 @@ public class HskProvider extends ContentProvider {
 	@Override
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
-		return 0;
+		switch(uriMatcher.match(uri)) {
+		case URI_SCORES:
+			int level = Integer.parseInt(uri.getPathSegments().get(1));
+			SQLiteDatabase db = scoreDbHelper.getWritableDatabase();
+			int count = db.update(HskContract.Scores.TABLE_NAME, values, HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER + " = " + level, null);
+			if(count == 0) {
+				values.put(HskContract.Scores.COLUMN_NAME_LEVEL_NUMBER, level);
+				db.insert(HskContract.Scores.TABLE_NAME, null, values);
+			}
+			getContext().getContentResolver().notifyChange(uri, null);
+			return count;
+		default:
+			throw new IllegalArgumentException("Unknown URI " + uri);
+		}
 	}
 
 }
