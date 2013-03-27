@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,9 +29,14 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	private static final int LOADER_FLASH_CARDS = 1;
 	private static final int LOADER_SCORES = 2;
 
+	private static final String PREF_KEY_CHARSET = "character_set";
+	private static final int PREF_CHARSET_SIMPLIFIED = 1;
+	private static final int PREF_CHARSET_TRADITIONAL = 2;
+
 	private int totalCount;
 	private int currentLevel;
 	private int currentIndex = 0;
+	private int currentCharset = PREF_CHARSET_SIMPLIFIED;
 
 	private Set<Integer> cardScores = null;
 
@@ -91,6 +97,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
 		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
+		currentCharset = getPreferences(MODE_PRIVATE).getInt(PREF_KEY_CHARSET, PREF_CHARSET_SIMPLIFIED);
 
 		pagerAdapter = new FlashCardPagerAdapter(getSupportFragmentManager(), null);
 		pager = (ViewPager) findViewById(R.id.flash_card_pager);
@@ -117,6 +124,16 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		this.menu = menu;
+		switch(currentCharset) {
+		case PREF_CHARSET_SIMPLIFIED:
+			menu.findItem(R.id.option_charset_simplified).setChecked(true);
+			break;
+		case PREF_CHARSET_TRADITIONAL:
+			menu.findItem(R.id.option_charset_traditional).setChecked(true);
+			break;
+		default:
+			break;
+		}
 		postOnLoadFinished();
 		return true;
 	}
@@ -130,9 +147,26 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			pager.setCurrentItem(0, false);
 			updateNav();
 			return true;
+		case R.id.option_charset_simplified:
+			switchCharset(item, PREF_CHARSET_SIMPLIFIED);
+			return true;
+		case R.id.option_charset_traditional:
+			switchCharset(item, PREF_CHARSET_TRADITIONAL);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void switchCharset(MenuItem item, int charset) {
+		if(currentCharset == charset) {
+			return;
+		}
+		currentCharset = charset;
+		SharedPreferences.Editor prefs = getPreferences(MODE_PRIVATE).edit();
+		prefs.putInt(PREF_KEY_CHARSET, charset);
+		prefs.commit();
+		item.setChecked(true);
 	}
 
 	@Override
@@ -214,14 +248,14 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 	private void updateScores() {
 		if(menu != null) {
-			MenuItem item = menu.getItem(1);
+			MenuItem item = menu.findItem(R.id.action_scores);
 			item.setTitle(String.format("correct: %s", cardScores.size()));
 		}
 	}
 
 	private void updateIndex() {
 		if(menu != null) {
-			MenuItem item = menu.getItem(0);
+			MenuItem item = menu.findItem(R.id.action_index);
 			item.setTitle(String.format("#%s / %s", currentIndex, totalCount));
 		}
 	}
