@@ -27,6 +27,7 @@ public class FlashCardFragment extends Fragment {
 	public static final String ARG_DEFINITION = "definition";
 	public static final String ARG_TRANSLATION = "translation";
 	public static final String ARG_INDEX = "index";
+	public static final String ARG_SHOW_FRONT = "show_front";
 
 	private View cardContainer;
 	private View cardFront;
@@ -48,6 +49,7 @@ public class FlashCardFragment extends Fragment {
 		definition = getArguments().getString(ARG_DEFINITION);
 		translation = getArguments().getString(ARG_TRANSLATION);
 		index = getArguments().getInt(ARG_INDEX);
+		showingFront = getArguments().getBoolean(ARG_SHOW_FRONT);
 	}
 
 	@Override
@@ -81,6 +83,12 @@ public class FlashCardFragment extends Fragment {
 				return false;
 			}
 		});
+
+		if(!showingFront) {
+            cardFront.setVisibility(View.GONE);
+            cardBack.setVisibility(View.VISIBLE);
+            cardBack.requestFocus();
+		}
 
 		return view;
 	}

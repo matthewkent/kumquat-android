@@ -50,11 +50,13 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			Fragment fragment = new FlashCardFragment();
 			Bundle args = new Bundle();
 			cursor.moveToPosition(i);
+			int index = i + 1;
 			String definition = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_DEFINITION)));
 			String translation = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED)));
 			args.putString(FlashCardFragment.ARG_DEFINITION, definition);
 			args.putString(FlashCardFragment.ARG_TRANSLATION, translation);
-			args.putInt(FlashCardFragment.ARG_INDEX, i + 1);
+			args.putInt(FlashCardFragment.ARG_INDEX, index);
+			args.putBoolean(FlashCardFragment.ARG_SHOW_FRONT, !cardScores.contains(index));
 			fragment.setArguments(args);
 			return fragment;
 		}
