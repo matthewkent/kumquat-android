@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,7 +63,17 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			cursor.moveToPosition(i);
 			int index = i + 1;
 			String definition = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_DEFINITION)));
-			String translation = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED)));
+			String translation = null;
+			switch(currentCharset) {
+			case PREF_CHARSET_SIMPLIFIED:
+				translation = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED)));
+				break;
+			case PREF_CHARSET_TRADITIONAL:
+				translation = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_TRADITIONAL)));
+				break;
+			default:
+				break;
+			}
 			args.putString(FlashCardFragment.ARG_DEFINITION, definition);
 			args.putString(FlashCardFragment.ARG_TRANSLATION, translation);
 			args.putInt(FlashCardFragment.ARG_INDEX, index);
@@ -86,6 +97,11 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			}
 			this.cursor = c;
 			notifyDataSetChanged();
+		}
+
+		@Override
+		public int getItemPosition(Object object) {
+			return PagerAdapter.POSITION_NONE;
 		}
 	}
 
@@ -167,6 +183,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		prefs.putInt(PREF_KEY_CHARSET, charset);
 		prefs.commit();
 		item.setChecked(true);
+		getSupportLoaderManager().restartLoader(LOADER_FLASH_CARDS, null, this);
 	}
 
 	@Override
@@ -222,6 +239,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
+		pagerAdapter.swapCursor(null);
 	}
 
 	@Override

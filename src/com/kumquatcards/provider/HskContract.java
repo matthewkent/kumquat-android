@@ -16,7 +16,7 @@ public final class HskContract {
 		public static final int LEVEL_3_MAX = 603;
 		public static final int LEVEL_4_MAX = 1203;
 		public static final int LEVEL_5_MAX = 2503;
-		public static final int LEVEL_6_MAX = 5013;
+		public static final int LEVEL_6_MAX = 5003;
 
 		public static int maxOrderForLevel(int level) {
 			switch(level) {
@@ -39,6 +39,7 @@ public final class HskContract {
 		public static final String TABLE_NAME = "translations";
 		public static final String COLUMN_NAME_ID = "_id";
 		public static final String COLUMN_NAME_SIMPLIFIED = "simplified";
+		public static final String COLUMN_NAME_TRADITIONAL = "traditional";
 		public static final String COLUMN_NAME_PINYIN = "pinyin";
 		public static final String COLUMN_NAME_DEFINITION = "definition";
 
