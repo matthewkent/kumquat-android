@@ -64,8 +64,15 @@ public class FlashCardFragment extends Fragment {
 		TextView cardBackText = (TextView) view.findViewById(R.id.card_back_text);
 		cardBackText.setText(translation);
 
-		Button flipButton = (Button) view.findViewById(R.id.button_flip);
-		flipButton.setOnClickListener(new OnClickListener() {
+		Button flipFront = (Button) view.findViewById(R.id.button_flip_front);
+		flipFront.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				flipCard(v);
+			}
+		});
+		Button flipBack = (Button) view.findViewById(R.id.button_flip_back);
+		flipBack.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				flipCard(v);

@@ -7,18 +7,6 @@
     android:paddingBottom="10dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/button_flip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="flip" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -59,6 +47,12 @@
                     android:imeOptions="actionSend"
                     android:inputType="text" />
             </LinearLayout>
+            <Button
+                android:id="@+id/button_flip_front"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="flip" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +64,8 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:fillViewport="true" >
 
                 <TextView
@@ -81,6 +76,12 @@
                     android:textIsSelectable="false"
                     android:textSize="30sp" />
             </ScrollView>
+            <Button
+                android:id="@+id/button_flip_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="flip" />
         </LinearLayout>
     </LinearLayout>
 
