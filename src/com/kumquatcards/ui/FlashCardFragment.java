@@ -26,6 +26,7 @@ public class FlashCardFragment extends Fragment {
 
 	public static final String ARG_DEFINITION = "definition";
 	public static final String ARG_TRANSLATION = "translation";
+	public static final String ARG_PINYIN = "pinyin";
 	public static final String ARG_INDEX = "index";
 	public static final String ARG_SHOW_FRONT = "show_front";
 
@@ -35,6 +36,7 @@ public class FlashCardFragment extends Fragment {
 
 	private String definition;
 	private String translation;
+	private String pinyin;
 	private int index;
 
 	private boolean showingFront = true;
@@ -48,6 +50,7 @@ public class FlashCardFragment extends Fragment {
 
 		definition = getArguments().getString(ARG_DEFINITION);
 		translation = getArguments().getString(ARG_TRANSLATION);
+		pinyin = getArguments().getString(ARG_PINYIN);
 		index = getArguments().getInt(ARG_INDEX);
 		showingFront = getArguments().getBoolean(ARG_SHOW_FRONT);
 	}
@@ -61,8 +64,12 @@ public class FlashCardFragment extends Fragment {
 		TextView cardFrontText = (TextView) view.findViewById(R.id.card_front_text);
 		cardFrontText.setText(definition);
 		cardBack = view.findViewById(R.id.card_back);
-		TextView cardBackText = (TextView) view.findViewById(R.id.card_back_text);
-		cardBackText.setText(translation);
+		TextView cardBackTranslation = (TextView) view.findViewById(R.id.card_back_translation);
+		cardBackTranslation.setText(translation);
+		TextView cardBackPinyin = (TextView) view.findViewById(R.id.card_back_pinyin);
+		cardBackPinyin.setText(pinyin);
+		TextView cardBackDefinition = (TextView) view.findViewById(R.id.card_back_definition);
+		cardBackDefinition.setText(definition);
 
 		Button flipFront = (Button) view.findViewById(R.id.button_flip_front);
 		flipFront.setOnClickListener(new OnClickListener() {

@@ -74,8 +74,10 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			default:
 				break;
 			}
+			String pinyin = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_PINYIN));
 			args.putString(FlashCardFragment.ARG_DEFINITION, definition);
 			args.putString(FlashCardFragment.ARG_TRANSLATION, translation);
+			args.putString(FlashCardFragment.ARG_PINYIN, pinyin);
 			args.putInt(FlashCardFragment.ARG_INDEX, index);
 			args.putBoolean(FlashCardFragment.ARG_SHOW_FRONT, !cardScores.contains(index));
 			fragment.setArguments(args);

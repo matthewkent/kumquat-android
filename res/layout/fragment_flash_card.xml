@@ -62,6 +62,20 @@
             android:orientation="vertical"
             android:visibility="gone" >
 
+            <TextView
+                android:id="@+id/card_back_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textIsSelectable="false"
+                android:textSize="40sp" />
+            <TextView
+                android:id="@+id/card_back_pinyin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textIsSelectable="false"
+                android:textSize="15sp" />
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -69,7 +83,7 @@
                 android:fillViewport="true" >
 
                 <TextView
-                    android:id="@+id/card_back_text"
+                    android:id="@+id/card_back_definition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
