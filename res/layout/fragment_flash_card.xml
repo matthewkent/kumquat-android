@@ -1,102 +1,96 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_container"
+    android:background="@drawable/border"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingBottom="10dp">
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/card_container"
+        android:id="@+id/card_front"
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/card_front"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fillViewport="true" >
-
-                <TextView
-                    android:id="@+id/card_front_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textIsSelectable="false"
-                    android:textSize="30sp" />
-            </ScrollView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <EditText
-                    android:id="@+id/card_input"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:imeOptions="actionSend"
-                    android:inputType="text" />
-            </LinearLayout>
-            <Button
-                android:id="@+id/button_flip_front"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="flip" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/card_back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone" >
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true" >
 
             <TextView
-                android:id="@+id/card_back_translation"
+                android:id="@+id/card_front_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textIsSelectable="false"
-                android:textSize="40sp" />
-            <TextView
-                android:id="@+id/card_back_pinyin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textIsSelectable="false"
-                android:textSize="15sp" />
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fillViewport="true" >
+                android:textSize="30sp" />
+        </ScrollView>
 
-                <TextView
-                    android:id="@+id/card_back_definition"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textIsSelectable="false"
-                    android:textSize="30sp" />
-            </ScrollView>
-            <Button
-                android:id="@+id/button_flip_back"
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/card_input"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="flip" />
+                android:layout_weight="1"
+                android:imeOptions="actionSend"
+                android:inputType="text" />
         </LinearLayout>
+        <Button
+            android:id="@+id/button_flip_front"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="flip" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/card_back"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/card_back_translation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textIsSelectable="false"
+            android:textSize="40sp" />
+        <TextView
+            android:id="@+id/card_back_pinyin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textIsSelectable="false"
+            android:textSize="15sp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true" >
+
+            <TextView
+                android:id="@+id/card_back_definition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textIsSelectable="false"
+                android:textSize="30sp" />
+        </ScrollView>
+        <Button
+            android:id="@+id/button_flip_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="flip" />
+    </LinearLayout>
 </LinearLayout>
