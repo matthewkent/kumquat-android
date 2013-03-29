@@ -8,6 +8,7 @@
     <string name="option_charset_simplified">Simplified</string>
     <string name="option_charset_traditional">Traditional</string>
     <string name="credits_title">Credits</string>
-    <string name="credits_content">write some stuff here</string>
+    <string name="credits_content">write some stuff here about people who did stuff</string>
+    <string name="title_color">#ED671E</string>
 
 </resources>

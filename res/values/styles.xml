@@ -16,18 +16,6 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    
-   	<style name="KumquatTheme" parent="@android:style/Theme.Holo.Light">
-   	 <item name="android:actionBarStyle">@style/KumquatTheme.ActionBarStyle</item>
-    </style>
-    
-	<style name="KumquatTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
-   	 <item name="android:titleTextStyle">@style/KumquatTheme.ActionBar.TitleTextStyle</item>
-    </style>
-
-    <style name="KumquatTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-   	 <item name="android:textColor">#ED671E</item>
-   	 <item name="android:textStyle">bold|normal</item>
-    </style>   
+  
     
 </resources>
