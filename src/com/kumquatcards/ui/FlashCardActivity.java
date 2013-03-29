@@ -241,7 +241,6 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
-		pagerAdapter.swapCursor(null);
 	}
 
 	@Override
