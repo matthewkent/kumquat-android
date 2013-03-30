@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -112,7 +113,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_flash_card);
-		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
 		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
 		currentCharset = getPreferences(MODE_PRIVATE).getInt(PREF_KEY_CHARSET, PREF_CHARSET_SIMPLIFIED);
@@ -171,6 +172,16 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		case R.id.option_charset_traditional:
 			switchCharset(item, PREF_CHARSET_TRADITIONAL);
 			return true;
+		case android.R.id.home:
+            // This is called when the Home (Up) button is pressed
+            // in the Action Bar.
+            Intent parentActivityIntent = new Intent(this, MainMenuActivity.class);
+            parentActivityIntent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(parentActivityIntent);
+            finish();
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
