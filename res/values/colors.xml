@@ -1,4 +1,8 @@
 <resources>
     <color name="actionbar_title">#ED671E</color>
+    <color name="card_border">#d8d3cd</color>
+    <color name="dark_gray_text">#7e7878</color>
+    <color name="chinese_character">#222222</color>
+    
 </resources>
  
