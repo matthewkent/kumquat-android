@@ -112,11 +112,11 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_flash_card);
-
+		
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
 		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
 		currentCharset = getPreferences(MODE_PRIVATE).getInt(PREF_KEY_CHARSET, PREF_CHARSET_SIMPLIFIED);
-
+		setTitle("HSK " + currentLevel);
 		pagerAdapter = new FlashCardPagerAdapter(getSupportFragmentManager(), null);
 		pager = (ViewPager) findViewById(R.id.flash_card_pager);
 		pager.setAdapter(pagerAdapter);
