@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textIsSelectable="false"
-            android:textSize="42sp"
+            android:textSize="52sp"
             android:textColor="@color/chinese_character" />
         <TextView
             android:id="@+id/card_back_pinyin"

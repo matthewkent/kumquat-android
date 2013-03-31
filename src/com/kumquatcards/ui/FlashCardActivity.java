@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -18,9 +19,13 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kumquatcards.R;
 import com.kumquatcards.provider.HskContract;
@@ -45,6 +50,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	private FlashCardPagerAdapter pagerAdapter;
 	private ViewPager pager;
 	private Menu menu;
+	private ViewGroup statusView;
 
 	public class FlashCardPagerAdapter extends FragmentStatePagerAdapter {
 		private Cursor cursor;
@@ -113,7 +119,13 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_flash_card);
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		statusView=(ViewGroup)inflater.inflate(R.layout.flash_card_actionbar_text, null);
+		getActionBar().setCustomView(statusView);
+		getActionBar().setDisplayShowCustomEnabled(true);
+		
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
 		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
 		currentCharset = getPreferences(MODE_PRIVATE).getInt(PREF_KEY_CHARSET, PREF_CHARSET_SIMPLIFIED);
@@ -277,16 +289,16 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	}
 
 	private void updateScores() {
-		if(menu != null) {
-			MenuItem item = menu.findItem(R.id.action_scores);
-			item.setTitle(String.format("correct: %s", cardScores.size()));
+		if(statusView != null) {
+			TextView text = (TextView) statusView.findViewById(R.id.card_correct);
+			text.setText(String.format("correct: %s", cardScores.size()));
 		}
 	}
 
 	private void updateIndex() {
-		if(menu != null) {
-			MenuItem item = menu.findItem(R.id.action_index);
-			item.setTitle(String.format("#%s / %s", currentIndex, totalCount));
+		if(statusView != null) {
+			TextView text = (TextView) statusView.findViewById(R.id.card_index);
+			text.setText(String.format("#%s / %s", currentIndex, totalCount));
 		}
 	}
 

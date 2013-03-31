@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent" 
+              android:layout_height="match_parent" 
+              android:orientation="horizontal"
+              android:gravity="center_horizontal" >
+              
+	<TextView
+            android:id="@+id/card_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:paddingLeft="4dp"
+            android:textIsSelectable="false"
+            android:textSize="16sp"
+            android:textColor="@color/chinese_character"/>
+
+	<TextView
+            android:id="@+id/card_correct"
+            android:layout_toRightOf="@id/card_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:textIsSelectable="false"
+            android:textSize="16sp"
+            android:textColor="@color/chinese_character"
+            android:paddingLeft="8dp"/>
+</RelativeLayout>

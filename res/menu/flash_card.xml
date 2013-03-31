@@ -1,13 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/action_index"
-        android:showAsAction="always|withText"
-        android:title="" />
-    <item
-        android:id="@+id/action_scores"
-        android:showAsAction="always|withText"
-        android:title="" />
+   
     <item
         android:id="@+id/action_start_over"
         android:showAsAction="never"
