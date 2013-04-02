@@ -55,12 +55,13 @@ public class MainMenuActivity extends FragmentActivity implements LoaderManager.
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		adapter = new MainMenuCursorAdapter(this);
 		ListView list = (ListView) findViewById(R.id.main_menu_list);
-		list.addHeaderView(getLayoutInflater().inflate(R.layout.list_header_main_menu, list, false));
+		// the header view will occupy position 0 in the list
+		list.addHeaderView(getLayoutInflater().inflate(R.layout.list_header_main_menu, list, false), null, false);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startQuiz(position + 1);
+				startQuiz(position);
 			}
 		});
 
