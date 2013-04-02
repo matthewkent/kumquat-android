@@ -1,6 +1,10 @@
 package com.kumquatcards.ui;
 
-import android.content.Context;
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -12,12 +16,10 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.kumquatcards.R;
 
@@ -123,17 +125,52 @@ public class FlashCardFragment extends Fragment {
 		String translation = getArguments().getString(FlashCardFragment.ARG_TRANSLATION);
 
 		boolean correct = input.equalsIgnoreCase(translation);
-		String message = correct ? "RIGHT!" : "WRONG!";
-		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+
+		flashBackground(correct);
 
 		if(correct) {
 			((FlashCardActivity) getActivity()).markCardCorrect(index);
-
-			InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
-			inputText.setText("");
-			flipCard(null);
 		}
+	}
+
+	private void flashBackground(final boolean correct) {
+		if(correct) {
+			cardContainer.setBackgroundResource(R.drawable.flash_correct);
+		} else {
+			cardContainer.setBackgroundResource(R.drawable.flash_incorrect);
+		}
+		Drawable bg = cardContainer.getBackground();
+		bg.setAlpha(0);
+		ObjectAnimator fadeIn = ObjectAnimator.ofInt(bg, "alpha", 0, 255);
+		fadeIn.setDuration(180);
+		fadeIn.setInterpolator(new AccelerateInterpolator());
+		ObjectAnimator fadeOut = ObjectAnimator.ofInt(bg, "alpha", 255, 0);
+		fadeOut.setDuration(180);
+		fadeOut.setInterpolator(new DecelerateInterpolator());
+		fadeOut.addListener(new AnimatorListener() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				cardContainer.setBackgroundResource(R.drawable.border);
+				if(correct) {
+					flipCard(null);
+				}
+			}
+
+			@Override
+			public void onAnimationStart(Animator animation) {
+			}
+
+			@Override
+			public void onAnimationCancel(Animator animation) {
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+			}
+		});
+		AnimatorSet flash = new AnimatorSet();
+		flash.playSequentially(fadeIn, fadeOut);
+		flash.start();
 	}
 
 	/*

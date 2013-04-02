@@ -19,7 +19,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,14 +68,14 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			Bundle args = new Bundle();
 			cursor.moveToPosition(i);
 			int index = i + 1;
-			String definition = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_DEFINITION)));
+			String definition = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_DEFINITION));
 			String translation = null;
 			switch(currentCharset) {
 			case PREF_CHARSET_SIMPLIFIED:
-				translation = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED)));
+				translation = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED));
 				break;
 			case PREF_CHARSET_TRADITIONAL:
-				translation = new String(cursor.getBlob(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_TRADITIONAL)));
+				translation = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_TRADITIONAL));
 				break;
 			default:
 				break;
