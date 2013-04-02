@@ -55,6 +55,7 @@ public class MainMenuActivity extends FragmentActivity implements LoaderManager.
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		adapter = new MainMenuCursorAdapter(this);
 		ListView list = (ListView) findViewById(R.id.main_menu_list);
+		list.addHeaderView(getLayoutInflater().inflate(R.layout.list_header_main_menu, list, false));
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
