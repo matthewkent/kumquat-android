@@ -290,14 +290,14 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	private void updateScores() {
 		if(statusView != null) {
 			TextView text = (TextView) statusView.findViewById(R.id.card_correct);
-			text.setText(String.format("correct: %s", cardScores.size()));
+			text.setText(String.format("CORRECT: %s", cardScores.size()));
 		}
 	}
 
 	private void updateIndex() {
 		if(statusView != null) {
 			TextView text = (TextView) statusView.findViewById(R.id.card_index);
-			text.setText(String.format("#%s / %s", currentIndex, totalCount));
+			text.setText(String.format("#%s/%s", currentIndex, totalCount));
 		}
 	}
 
