@@ -11,6 +11,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -80,7 +81,7 @@ public class MainMenuActivity extends FragmentActivity implements LoaderManager.
 		switch(item.getItemId()) {
 		case R.id.action_credits:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(R.string.credits_content).setTitle(R.string.credits_title);
+			builder.setMessage(Html.fromHtml(getResources().getString(R.string.credits_content))).setTitle(R.string.credits_title);
 			builder.create().show();
 			return true;
 		default:

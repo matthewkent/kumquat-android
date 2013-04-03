@@ -8,6 +8,10 @@
     <string name="option_charset_simplified">Simplified</string>
     <string name="option_charset_traditional">Traditional</string>
     <string name="credits_title">Credits</string>
-    <string name="credits_content">write some stuff here</string>
+    <string name="credits_content"><![CDATA[
+<p>Design and development by Matt Kent and Morgan Springer</p>
+<p>Chinese dictionary: <a href="http://www.mdbg.net/chindict/chindict.php?page=cedict">CC-CEDICT</a><p>
+<p>HSK lists: <a href="http://lingomi.com/blog/hsk-lists-2010/">Lingomi</a></p>
+]]></string>
     <string name="main_menu_title">HSK</string>
 </resources>
