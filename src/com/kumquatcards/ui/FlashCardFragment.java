@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ public class FlashCardFragment extends Fragment {
 	private View cardContainer;
 	private View cardFront;
 	private View cardBack;
+	private EditText inputText;
 
 	private String definition;
 	private String translation;
@@ -72,6 +76,7 @@ public class FlashCardFragment extends Fragment {
 		cardBackPinyin.setText(pinyin);
 		TextView cardBackDefinition = (TextView) view.findViewById(R.id.card_back_definition);
 		cardBackDefinition.setText(definition);
+		inputText = (EditText) view.findViewById(R.id.card_input);
 
 		Button flipFront = (Button) view.findViewById(R.id.button_flip_front);
 		flipFront.setOnClickListener(new OnClickListener() {
@@ -88,8 +93,7 @@ public class FlashCardFragment extends Fragment {
 			}
 		});
 
-		EditText editText = (EditText) view.findViewById(R.id.card_input);
-		editText.setOnEditorActionListener(new OnEditorActionListener() {
+		inputText.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if(actionId == EditorInfo.IME_ACTION_SEND) {
@@ -120,7 +124,6 @@ public class FlashCardFragment extends Fragment {
 	}
 
 	public void checkTranslation(View view) {
-		EditText inputText = (EditText) cardFront.findViewById(R.id.card_input);
 		String input = inputText.getText().toString();
 		String translation = getArguments().getString(FlashCardFragment.ARG_TRANSLATION);
 
@@ -152,7 +155,20 @@ public class FlashCardFragment extends Fragment {
 			public void onAnimationEnd(Animator animation) {
 				cardContainer.setBackgroundResource(R.drawable.border);
 				if(correct) {
-					flipCard(null);
+					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0, new ResultReceiver(null) {
+						@Override
+						protected void onReceiveResult(int resultCode,
+								Bundle resultData) {
+							cardFront.postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									inputText.setText("");
+									flipCard(null);
+								}
+							}, 250);
+						}
+					});
 				}
 			}
 
