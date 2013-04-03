@@ -6,24 +6,18 @@
               
 	<TextView
             android:id="@+id/card_index"
+            style="@style/KumquatTheme.ActionBar.MenuTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:paddingLeft="4dp"
-            android:textIsSelectable="false"
-            android:textSize="16sp"
-            android:textColor="@color/chinese_character"/>
+            android:paddingLeft="4dp" />
 
 	<TextView
             android:id="@+id/card_correct"
+            style="@style/KumquatTheme.ActionBar.MenuTextStyle"
             android:layout_toRightOf="@id/card_index"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:textIsSelectable="false"
-            android:textSize="16sp"
-            android:textColor="@color/chinese_character"
             android:paddingLeft="10dp"/>
 </RelativeLayout>
