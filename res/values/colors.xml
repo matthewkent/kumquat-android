@@ -3,8 +3,8 @@
     <color name="card_border">#d8d3cd</color>
     <color name="dark_gray_text">#7e7878</color>
     <color name="chinese_character">#222222</color>
-    <color name="correct_answer">#33b5e5</color>
-    <color name="incorrect_answer">#ff4444</color>
+    <color name="correct_answer">#99cc00</color>
+    <color name="incorrect_answer">#33b5e5</color>
     
 </resources>
  

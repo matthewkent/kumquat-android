@@ -1,14 +1,18 @@
 package com.kumquatcards.ui;
 
 import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+import android.animation.ArgbEvaluator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -137,30 +141,46 @@ public class FlashCardFragment extends Fragment {
 	}
 
 	private void flashBackground(final boolean correct) {
-		if(correct) {
-			cardContainer.setBackgroundResource(R.drawable.flash_correct);
-		} else {
-			cardContainer.setBackgroundResource(R.drawable.flash_incorrect);
-		}
-		Drawable bg = cardContainer.getBackground();
-		bg.setAlpha(0);
-		ObjectAnimator fadeIn = ObjectAnimator.ofInt(bg, "alpha", 0, 255);
-		fadeIn.setDuration(180);
+		Integer colorFrom = getResources().getColor(R.color.card_border);
+		int id = correct ? R.color.correct_answer : R.color.incorrect_answer;
+		Integer colorTo = getResources().getColor(id);
+		final int widthFrom = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+		final int widthTo = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
+		AnimatorUpdateListener strokeListener = new AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				GradientDrawable d = (GradientDrawable) cardContainer.getBackground();
+				Integer width = (Integer) animation.getAnimatedValue("width");
+				Integer color = (Integer) animation.getAnimatedValue("color");
+				d.setStroke(width, color);
+				d.invalidateSelf();
+			}
+		};
+		PropertyValuesHolder fadeInColor = PropertyValuesHolder.ofObject("color", new ArgbEvaluator(), colorFrom, colorTo);
+		PropertyValuesHolder fadeInWidth = PropertyValuesHolder.ofInt("width", widthFrom, widthTo);
+		PropertyValuesHolder fadeOutColor = PropertyValuesHolder.ofObject("color", new ArgbEvaluator(), colorTo, colorFrom);
+		PropertyValuesHolder fadeOutWidth = PropertyValuesHolder.ofInt("width", widthTo, widthFrom);
+		
+		ValueAnimator fadeIn = ValueAnimator.ofPropertyValuesHolder(fadeInColor, fadeInWidth);
+		fadeIn.setDuration(250);
 		fadeIn.setInterpolator(new AccelerateInterpolator());
-		ObjectAnimator fadeOut = ObjectAnimator.ofInt(bg, "alpha", 255, 0);
-		fadeOut.setDuration(180);
+		fadeIn.addUpdateListener(strokeListener);
+
+		ValueAnimator fadeOut = ValueAnimator.ofPropertyValuesHolder(fadeOutColor, fadeOutWidth);
+		fadeOut.setDuration(250);
 		fadeOut.setInterpolator(new DecelerateInterpolator());
-		fadeOut.addListener(new AnimatorListener() {
+		fadeOut.addUpdateListener(strokeListener);
+
+		fadeOut.addListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationEnd(Animator animation) {
-				cardContainer.setBackgroundResource(R.drawable.border);
 				if(correct) {
 					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(inputText.getWindowToken(), 0, new ResultReceiver(null) {
 						@Override
 						protected void onReceiveResult(int resultCode,
 								Bundle resultData) {
-							cardFront.postDelayed(new Runnable() {
+							cardContainer.postDelayed(new Runnable() {
 								@Override
 								public void run() {
 									inputText.setText("");
@@ -171,19 +191,8 @@ public class FlashCardFragment extends Fragment {
 					});
 				}
 			}
-
-			@Override
-			public void onAnimationStart(Animator animation) {
-			}
-
-			@Override
-			public void onAnimationCancel(Animator animation) {
-			}
-
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-			}
 		});
+
 		AnimatorSet flash = new AnimatorSet();
 		flash.playSequentially(fadeIn, fadeOut);
 		flash.start();
