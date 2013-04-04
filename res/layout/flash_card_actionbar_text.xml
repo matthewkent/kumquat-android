@@ -10,12 +10,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"        
             android:paddingLeft="4dp" />
+	
+	<ImageView
+	    	android:id="@+id/check_mark"
+	    	android:src="@drawable/checkmark"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:paddingLeft="10dp" />
 
-	<TextView
+ 	<TextView
             android:id="@+id/card_correct"
             style="@style/KumquatTheme.ActionBar.MenuTextStyle"
             android:layout_toRightOf="@id/card_index"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"      
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="4dp"/>
 </RelativeLayout>
