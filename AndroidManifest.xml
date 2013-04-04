@@ -26,7 +26,7 @@
         <activity
             android:name="com.kumquatcards.ui.FlashCardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize|stateUnchanged" >
         </activity>
         <provider
             android:name="com.kumquatcards.provider.HskProvider"
