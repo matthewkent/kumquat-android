@@ -38,12 +38,10 @@
                 android:imeOptions="actionSend"
                 android:inputType="text" />
         </LinearLayout>
-        <Button
+        <ImageButton
             android:id="@+id/button_flip_front"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="flip" />
+            style="@style/flip_button"
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -80,11 +78,8 @@
                 android:id="@+id/card_back_definition"
                 style="@style/definition"/>
         </ScrollView>
-        <Button
+        <ImageButton
             android:id="@+id/button_flip_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="flip" />
+            style="@style/flip_button"/>
     </LinearLayout>
 </LinearLayout>

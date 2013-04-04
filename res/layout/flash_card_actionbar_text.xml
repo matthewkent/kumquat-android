@@ -7,19 +7,15 @@
 	<TextView
             android:id="@+id/card_index"
             style="@style/KumquatTheme.ActionBar.MenuTextStyle"
-            android:textIsSelectable="false"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"        
             android:paddingLeft="4dp" />
 
 	<TextView
             android:id="@+id/card_correct"
             style="@style/KumquatTheme.ActionBar.MenuTextStyle"
-            android:textIsSelectable="false"
             android:layout_toRightOf="@id/card_index"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"      
             android:paddingLeft="10dp"/>
 </RelativeLayout>

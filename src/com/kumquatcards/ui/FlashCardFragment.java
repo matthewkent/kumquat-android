@@ -23,8 +23,8 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -82,14 +82,14 @@ public class FlashCardFragment extends Fragment {
 		cardBackDefinition.setText(definition);
 		inputText = (EditText) view.findViewById(R.id.card_input);
 
-		Button flipFront = (Button) view.findViewById(R.id.button_flip_front);
+		ImageButton flipFront = (ImageButton) view.findViewById(R.id.button_flip_front);
 		flipFront.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				flipCard(v);
 			}
 		});
-		Button flipBack = (Button) view.findViewById(R.id.button_flip_back);
+		ImageButton flipBack = (ImageButton) view.findViewById(R.id.button_flip_back);
 		flipBack.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
