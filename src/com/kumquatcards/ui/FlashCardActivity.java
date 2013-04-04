@@ -59,6 +59,19 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			this.cursor = cursor;
 		}
 
+		private String getString(Cursor cursor, String columnName) {
+			int columnIndex = cursor.getColumnIndex(columnName);
+			int type = cursor.getType(columnIndex);
+			switch(type) {
+			case Cursor.FIELD_TYPE_BLOB:
+				return new String(cursor.getBlob(columnIndex));
+			case Cursor.FIELD_TYPE_STRING:
+				return cursor.getString(columnIndex);
+			default:
+				throw new IllegalArgumentException("Something has gone terribly wrong, column " + columnName+ " was returned as data type " + type);
+			}
+		}
+
 		@Override
 		public android.support.v4.app.Fragment getItem(int i) {
 			if(getCount() == 0) {
@@ -68,19 +81,19 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			Bundle args = new Bundle();
 			cursor.moveToPosition(i);
 			int index = i + 1;
-			String definition = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_DEFINITION));
+			String definition = getString(cursor, HskContract.FlashCards.COLUMN_NAME_DEFINITION);
 			String translation = null;
 			switch(currentCharset) {
 			case PREF_CHARSET_SIMPLIFIED:
-				translation = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED));
+				translation = getString(cursor, HskContract.FlashCards.COLUMN_NAME_SIMPLIFIED);
 				break;
 			case PREF_CHARSET_TRADITIONAL:
-				translation = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_TRADITIONAL));
+				translation = getString(cursor, HskContract.FlashCards.COLUMN_NAME_TRADITIONAL);
 				break;
 			default:
 				break;
 			}
-			String pinyin = cursor.getString(cursor.getColumnIndex(HskContract.FlashCards.COLUMN_NAME_PINYIN));
+			String pinyin = getString(cursor, HskContract.FlashCards.COLUMN_NAME_PINYIN);
 			args.putString(FlashCardFragment.ARG_DEFINITION, definition);
 			args.putString(FlashCardFragment.ARG_TRANSLATION, translation);
 			args.putString(FlashCardFragment.ARG_PINYIN, pinyin);
