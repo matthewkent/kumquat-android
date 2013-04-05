@@ -8,11 +8,10 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 
 public class HskProvider extends ContentProvider {
 
-	private static final String TAG = "HskProvider";
+	public static final String TAG = "HskProvider";
 
 	private HskDbHelper hskDbHelper;
 	private ScoreDbHelper scoreDbHelper;
@@ -68,9 +67,8 @@ public class HskProvider extends ContentProvider {
 				throw new IllegalArgumentException("Unknown URI " + uri);
 			}
 		} catch (IOException e) {
-			Log.e(TAG, "Error opening HSK database", e);
+			throw new RuntimeException("Error opening HSK database", e);
 		}
-		return null;
 	}
 
 	@Override
