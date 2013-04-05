@@ -15,4 +15,5 @@
 ]]></string>
     <string name="main_menu_title">HSK</string>
     <string name="flip_button_accessibility">flip card over</string>
+    <string name="input_hint">enter mandarin translation</string>
 </resources>

@@ -218,7 +218,7 @@ public class FlashCardFragment extends Fragment {
         // Create a new 3D rotation with the supplied parameter
         // The animation listener is used to trigger the next animation
         final Rotate3dAnimation rotation =
-                new Rotate3dAnimation(start, end, centerX, centerY, 310.0f, true);
+                new Rotate3dAnimation(start, end, centerX, centerY, 450.0f, true);
         rotation.setDuration(200);
         rotation.setFillAfter(true);
         rotation.setInterpolator(new AccelerateInterpolator());
@@ -271,13 +271,13 @@ public class FlashCardFragment extends Fragment {
                 cardBack.setVisibility(View.VISIBLE);
                 cardBack.requestFocus();
 
-                rotation = new Rotate3dAnimation(-90, 0, centerX, centerY, 310.0f, false);
+                rotation = new Rotate3dAnimation(-90, 0, centerX, centerY, 450.0f, false);
             } else {
                 cardBack.setVisibility(View.GONE);
                 cardFront.setVisibility(View.VISIBLE);
                 cardFront.requestFocus();
 
-                rotation = new Rotate3dAnimation(90, 0, centerX, centerY, 310.0f, false);
+                rotation = new Rotate3dAnimation(90, 0, centerX, centerY, 450.0f, false);
             }
 
             rotation.setDuration(200);
