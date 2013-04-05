@@ -24,21 +24,6 @@
         <item name="android:lineSpacingMultiplier">1.05</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/dark_gray_text</item>
-    </style> 
- 
-    <!-- Delete these two styles as soon as we have settled on a flip button style -->
-    <style name="flip_button">
-        <item name="android:src">@drawable/button_flip</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">right</item>
-        <item name="android:contentDescription">flip card</item>
-    </style>
-    
-    <style name="flip_button.gray" parent="android:attr/borderlessButtonStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:src">@drawable/button_flip_gray</item>
     </style>
     
 </resources>
