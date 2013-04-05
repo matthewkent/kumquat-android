@@ -14,14 +14,19 @@
 	<ImageView
 	    	android:id="@+id/check_mark"
 	    	android:src="@drawable/checkmark"
+	    	android:layout_toRightOf="@id/card_index"
 	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:paddingLeft="10dp" />
+	    	android:layout_height="match_parent"
+	    	android:layout_gravity="center"
+	    	android:gravity="center_horizontal"
+	    	android:paddingLeft="10dp"
+	    	android:adjustViewBounds="true"
+	    	android:scaleType="fitCenter"/>
 
  	<TextView
             android:id="@+id/card_correct"
             style="@style/KumquatTheme.ActionBar.MenuTextStyle"
-            android:layout_toRightOf="@id/card_index"
+            android:layout_toRightOf="@id/check_mark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"      
             android:paddingLeft="4dp"/>

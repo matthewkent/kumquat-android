@@ -14,4 +14,5 @@
 <p>HSK lists: <a href="http://lingomi.com/blog/hsk-lists-2010/">Lingomi</a></p>
 ]]></string>
     <string name="main_menu_title">HSK</string>
+    <string name="flip_button_accessibility">flip card over</string>
 </resources>
