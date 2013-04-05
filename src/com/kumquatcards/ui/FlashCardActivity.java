@@ -43,6 +43,7 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 	private int currentLevel;
 	private int currentIndex = 0;
 	private int currentCharset = PREF_CHARSET_SIMPLIFIED;
+	private int savedIndex = -1;
 
 	private Set<Integer> cardScores = null;
 
@@ -137,7 +138,10 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 		statusView=(ViewGroup)inflater.inflate(R.layout.flash_card_actionbar_text, null);
 		getActionBar().setCustomView(statusView);
 		getActionBar().setDisplayShowCustomEnabled(true);
-		
+
+		if(savedInstanceState != null) {
+			savedIndex = savedInstanceState.getInt("savedIndex");
+		}
 		currentLevel = Integer.parseInt(getIntent().getData().getPathSegments().get(1));
 		totalCount = HskContract.FlashCards.maxOrderForLevel(currentLevel);
 		currentCharset = getPreferences(MODE_PRIVATE).getInt(PREF_KEY_CHARSET, PREF_CHARSET_SIMPLIFIED);
@@ -155,6 +159,12 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 
 		getSupportLoaderManager().initLoader(LOADER_FLASH_CARDS, null, this);
 		getSupportLoaderManager().initLoader(LOADER_SCORES, null, this);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("savedIndex", currentIndex);
 	}
 
 	@Override
@@ -253,7 +263,11 @@ public class FlashCardActivity extends FragmentActivity implements LoaderManager
 			if(cursor.moveToFirst()) {
 				String scoreData = cursor.getString(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_SCORE_DATA));
 				cardScores = deserializeScoreData(scoreData);
-				currentIndex = cursor.getInt(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_CURRENT_CARD));
+				if(savedIndex > 0) {
+					currentIndex = savedIndex;
+				} else {
+					currentIndex = cursor.getInt(cursor.getColumnIndex(HskContract.Scores.COLUMN_NAME_CURRENT_CARD));
+				}
 			} else {
 				cardScores = new HashSet<Integer>();
 			}
