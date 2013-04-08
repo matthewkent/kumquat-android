@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="10dp"
+            android:padding="@dimen/flash_card_padding"
             android:fillViewport="true" >
 
             <TextView
@@ -29,20 +29,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp" >
+            android:padding="@dimen/flash_card_padding" >
 
             <EditText
                 android:id="@+id/card_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="@dimen/input_text_size"
                 android:hint="@string/input_hint"
                 android:imeOptions="actionSend"
+                android:padding="10dp" 
                 android:inputType="text" />
         </LinearLayout>
-        
-
-        
+       
         <ImageButton
             android:id="@+id/button_flip_front"
             android:src="@drawable/button_flip_gray"
@@ -68,10 +68,10 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textIsSelectable="false"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:textSize="52sp"
+            android:paddingRight="@dimen/flash_card_padding"
+            android:paddingTop="@dimen/flash_card_padding"
+            android:paddingLeft="@dimen/flash_card_padding"
+            android:textSize="@dimen/character_text_size"
             android:textColor="@color/chinese_character" />
         <TextView
             android:id="@+id/card_back_pinyin"
@@ -79,16 +79,18 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textIsSelectable="false"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:textSize="15sp"
+            android:paddingRight="@dimen/flash_card_padding"
+            android:paddingLeft="@dimen/flash_card_padding"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textSize="@dimen/pinyin_text_size"
             android:textColor="@color/dark_gray_text" />
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
+            android:paddingRight="@dimen/flash_card_padding"
+            android:paddingLeft="@dimen/flash_card_padding"
             android:fillViewport="true" >
 
             <TextView
